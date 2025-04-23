@@ -11,9 +11,7 @@ export default function TodoApp() {
 
   //Whenever `tasks` changes, persist it to localStorage
   // This is a side effect, so we use useEffect
-  // This will run after every render
-  // and after every change to `tasks`
-  // This is a good place to put side effects
+  // This will run after every renderand after every change to `tasks`
   useEffect(() => {
     localStorage.setItem("task", JSON.stringify(task));
   }, [task]);
