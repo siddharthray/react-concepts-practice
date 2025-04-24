@@ -44,3 +44,14 @@ code {
     margin-top: 0.8rem;
   color: #666;
 }
+
+.todo-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.todo-column {
+  flex: 1;
+  max-width: 400px;
+}
