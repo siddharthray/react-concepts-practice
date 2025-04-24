@@ -1,4 +1,3 @@
-// src/components/TodoApp.jsx
 import { useState, useEffect, useCallback } from "react";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
@@ -9,19 +8,24 @@ export default function TodoApp() {
     const stored = localStorage.getItem("tasks");
     return stored ? JSON.parse(stored) : [];
   });
+  const [editingTask, setEditingTask] = useState(null);
 
+  // Persist on every change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // Add new
   const handleAddTask = useCallback((newTask) => {
     setTasks((prev) => [...prev, newTask]);
   }, []);
 
+  // Delete
   const handleDelete = useCallback((id) => {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  // Toggle complete ↔ reopen (with timestamps)
   const handleToggle = useCallback((id) => {
     setTasks((prev) =>
       prev.map((t) =>
@@ -29,7 +33,7 @@ export default function TodoApp() {
           ? {
               ...t,
               completed: !t.completed,
-              completedAt: t.completed ? null : new Date().toISOString(),
+              completedAt: !t.completed ? new Date().toISOString() : null,
               reopenedAt: t.completed ? new Date().toISOString() : null,
             }
           : t
@@ -37,11 +41,25 @@ export default function TodoApp() {
     );
   }, []);
 
+  // Start editing: load the task into the form
+  const handleEditStart = useCallback((task) => {
+    setEditingTask(task);
+  }, []);
+
+  // Save edited text, then clear edit mode
+  const handleSaveEdit = useCallback((id, newText) => {
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, text: newText } : t))
+    );
+    setEditingTask(null);
+  }, []);
+
   const openTasks = tasks.filter((t) => !t.completed);
   const doneTasks = tasks.filter((t) => t.completed);
 
   return (
     <div className={styles.container}>
+      {/* Row 1: title + description */}
       <div className={styles.title}>
         <h1>Todo App</h1>
         <p>
@@ -49,17 +67,24 @@ export default function TodoApp() {
         </p>
       </div>
 
-      <div className={styles.row}>
-        <TodoForm onAddTask={handleAddTask} />
+      {/* Row 2: form */}
+      <div className={styles.todoForm}>
+        <TodoForm
+          onAddTask={handleAddTask}
+          editingTask={editingTask}
+          onSaveEdit={handleSaveEdit}
+        />
       </div>
 
-      <div className={`${styles.row} ${styles.thirdRow}}`}>
+      {/* Row 3: two columns */}
+      <div className={`${styles.row} ${styles.thirdRow}`}>
         <div className={`${styles.column} ${styles.openTasks}`}>
           <h2>Open Tasks</h2>
           <TodoList
             items={openTasks}
             onDelete={handleDelete}
             onToggle={handleToggle}
+            onEdit={handleEditStart}
           />
         </div>
 

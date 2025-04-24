@@ -1,37 +1,61 @@
-export default function TodoItem({ item, onDelete, onToggle }) {
+import styles from "./TodoItem.module.css";
+
+export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
   return (
-    <li style={{ marginBottom: "0.5rem" }}>
-      <input
-        type="checkbox"
-        checked={item.completed}
-        onChange={() => onToggle(item.id)}
-      />
-      <span
-        style={{
-          marginLeft: "0.5rem",
-          textDecoration: item.completed ? "line-through" : "none",
-        }}
-      >
-        {item.text}
-      </span>
+    <li className={styles.todoItem}>
+      {/* Row 1: checkbox + text, with actions on the right */}
+      <div className={styles.content}>
+        <div className={styles.left}>
+          <input
+            type="checkbox"
+            checked={item.completed}
+            onChange={() => onToggle(item.id)}
+          />
+          <span className={styles.todoText}>{item.text}</span>
+        </div>
+        <div className={styles.actions}>
+          {!item.completed && onEdit && (
+            <button
+              className={`${styles.button} ${styles.editButton}`}
+              onClick={() => onEdit(item)}
+            >
+              Edit
+            </button>
+          )}
+          <button
+            className={`${styles.button} ${styles.deleteButton}`}
+            onClick={() => onDelete(item.id)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
 
-      <button style={{ marginLeft: "1rem" }} onClick={() => onDelete(item.id)}>
-        Delete
-      </button>
+      {/* Row 2: timestamps below */}
+      <div className={styles.timestamps}>
+        <div className={styles.timestamp}>
+          <span className={styles.timestampLabel}>Created:</span>
+          <span className={styles.timestampValue}>
+            {new Date(item.createdAt).toLocaleString()}
+          </span>
+        </div>
 
-      <div style={{ fontSize: "0.8rem", color: "#666", marginTop: "0.2rem" }}>
-        Created: {new Date(item.createdAt).toLocaleString()}
         {item.completed && (
-          <>
-            <br />
-            Completed: {new Date(item.completedAt).toLocaleString()}
-          </>
+          <div className={styles.timestamp}>
+            <span className={styles.timestampLabel}>Completed:</span>
+            <span className={styles.timestampValue}>
+              {new Date(item.completedAt).toLocaleString()}
+            </span>
+          </div>
         )}
+
         {!item.completed && item.reopenedAt && (
-          <>
-            <br />
-            Reopened: {new Date(item.reopenedAt).toLocaleString()}
-          </>
+          <div className={styles.timestamp}>
+            <span className={styles.timestampLabel}>Reopened:</span>
+            <span className={styles.timestampValue}>
+              {new Date(item.reopenedAt).toLocaleString()}
+            </span>
+          </div>
         )}
       </div>
     </li>

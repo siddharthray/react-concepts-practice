@@ -22,8 +22,16 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: first baseline;
+  gap: 1rem;
+}
+
+.todoForm {
+  display: flex;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
+  width: 100%;
 }
 
 /* Third row: two columns side by side */
