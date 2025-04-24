@@ -5,6 +5,9 @@ export default function TodoForm({ onAddTask }) {
     id: null,
     text: "",
     completed: false,
+    createdAt: null,
+    completedAt: null,
+    reopenedAt: null,
   };
   const [task, setTask] = useState(intialTask);
 
@@ -25,9 +28,12 @@ export default function TodoForm({ onAddTask }) {
       id: Math.floor(Math.random() * 1000),
       text: task.text.trim(),
       completed: false,
+      createdAt: new Date().toISOString(),
+      completedAt: null,
+      reopenedAt: null,
     };
     onAddTask(newTask);
-    setTask(newTask);
+    setTask(intialTask);
   };
 
   return (

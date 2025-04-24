@@ -27,19 +27,56 @@ export default function TodoApp() {
   }, []);
 
   // And one for toggling completed task status
-  const handleToggle = (id) => {
+  const handleToggle = useCallback((id) => {
     setTask((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+      prev.map((t) => {
+        if (t.id !== id) return t;
+
+        // flipping from open → completed
+        if (!t.completed) {
+          return {
+            ...t,
+            completed: true,
+            completedAt: new Date().toISOString(),
+            reopenedAt: null,
+          };
+        }
+
+        // flipping from completed → open
+        return {
+          ...t,
+          completed: false,
+          reopenedAt: new Date().toISOString(),
+          completedAt: null,
+        };
+      })
     );
-  };
+  }, []);
+  const openTasks = task.filter((t) => !t.completed);
+  const doneTasks = task.filter((t) => t.completed);
 
   return (
     <div>
-      <h1 className="todo-app-title">Todo App</h1>
-      <p className="todo-app-description">Manage your tasks efficiently!</p>
-      {/* *Pass the add-callback into the form */}
-      <TodoForm onAddTask={handleAddTask} />
-      <TodoList items={task} onDelete={handleDelete} onToggle={handleToggle} />
+      <div className="todo-container">
+        <div className="todo-column">
+          <h2>Open Tasks</h2>
+          <TodoForm onAddTask={handleAddTask} />
+          <TodoList
+            items={openTasks}
+            onDelete={handleDelete}
+            onToggle={handleToggle}
+          />
+        </div>
+
+        <div className="todo-column">
+          <h2>Completed Tasks</h2>
+          <TodoList
+            items={doneTasks}
+            onDelete={handleDelete}
+            onToggle={handleToggle}
+          />
+        </div>
+      </div>
     </div>
   );
 }
