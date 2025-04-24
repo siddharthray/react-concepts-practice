@@ -49,7 +49,7 @@ export default function TodoApp() {
         </p>
       </div>
 
-      <div className={styles.row}>
+      <div className={styles.todoForm}>
         <TodoForm onAddTask={handleAddTask} />
       </div>
 

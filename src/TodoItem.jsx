@@ -9,7 +9,7 @@ export default function TodoItem({ item, onDelete, onToggle }) {
       <span
         style={{
           marginLeft: "0.5rem",
-          textDecoration: item.completed ? "line-through" : "none",
+          textDecoration: "none",
         }}
       >
         {item.text}

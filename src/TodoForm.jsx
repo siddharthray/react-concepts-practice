@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./TodoForm.module.css";
 
 export default function TodoForm({ onAddTask }) {
   const intialTask = {
@@ -37,14 +38,20 @@ export default function TodoForm({ onAddTask }) {
   };
 
   return (
-    <form onSubmit={addTask}>
+    <form onSubmit={addTask} className={styles["todo-form-container"]}>
       <input
         type="text"
         value={task.text}
         onChange={handleChange}
         placeholder="Enter new task"
+        className={styles["todo-input"]}
+        autoFocus
       />
-      <button type="submit" disabled={!task.text.trim()}>
+      <button
+        type="submit"
+        disabled={!task.text.trim()}
+        className={styles["add-task-button"]}
+      >
         Add Task
       </button>
     </form>
