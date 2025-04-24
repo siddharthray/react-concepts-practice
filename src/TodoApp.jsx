@@ -1,66 +1,61 @@
+// src/components/TodoApp.jsx
+import { useState, useEffect, useCallback } from "react";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
-import { useEffect, useState, useCallback } from "react";
+import styles from "./TodoApp.module.css";
 
 export default function TodoApp() {
-  //Initialize with whatever is in localStorage (or empty array)
-  const [task, setTask] = useState(() => {
-    const storedTasks = localStorage.getItem("task");
-    return storedTasks ? JSON.parse(storedTasks) : [];
+  const [tasks, setTasks] = useState(() => {
+    const stored = localStorage.getItem("tasks");
+    return stored ? JSON.parse(stored) : [];
   });
 
-  //Whenever `tasks` changes, persist it to localStorage
-  // This is a side effect, so we use useEffect
-  // This will run after every renderand after every change to `tasks`
   useEffect(() => {
-    localStorage.setItem("task", JSON.stringify(task));
-  }, [task]);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-  // Create a callback for adding a new task
   const handleAddTask = useCallback((newTask) => {
-    setTask((prev) => [...prev, newTask]);
+    setTasks((prev) => [...prev, newTask]);
   }, []);
 
-  // And one for deleting
   const handleDelete = useCallback((id) => {
-    setTask((prev) => prev.filter((t) => t.id !== id));
+    setTasks((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  // And one for toggling completed task status
   const handleToggle = useCallback((id) => {
-    setTask((prev) =>
-      prev.map((t) => {
-        if (t.id !== id) return t;
-
-        // flipping from open → completed
-        if (!t.completed) {
-          return {
-            ...t,
-            completed: true,
-            completedAt: new Date().toISOString(),
-            reopenedAt: null,
-          };
-        }
-
-        // flipping from completed → open
-        return {
-          ...t,
-          completed: false,
-          reopenedAt: new Date().toISOString(),
-          completedAt: null,
-        };
-      })
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              completed: !t.completed,
+              completedAt: t.completed ? null : new Date().toISOString(),
+              reopenedAt: t.completed ? new Date().toISOString() : null,
+            }
+          : t
+      )
     );
   }, []);
-  const openTasks = task.filter((t) => !t.completed);
-  const doneTasks = task.filter((t) => t.completed);
+
+  const openTasks = tasks.filter((t) => !t.completed);
+  const doneTasks = tasks.filter((t) => t.completed);
 
   return (
-    <div>
-      <div className="todo-container">
-        <div className="todo-column">
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <h1>Todo App</h1>
+        <p>
+          Keep track of your tasks: add new ones, mark them done, or reopen.
+        </p>
+      </div>
+
+      <div className={styles.row}>
+        <TodoForm onAddTask={handleAddTask} />
+      </div>
+
+      <div className={`${styles.row} ${styles.thirdRow}}`}>
+        <div className={`${styles.column} ${styles.openTasks}`}>
           <h2>Open Tasks</h2>
-          <TodoForm onAddTask={handleAddTask} />
           <TodoList
             items={openTasks}
             onDelete={handleDelete}
@@ -68,7 +63,7 @@ export default function TodoApp() {
           />
         </div>
 
-        <div className="todo-column">
+        <div className={`${styles.column} ${styles.completedTasks}`}>
           <h2>Completed Tasks</h2>
           <TodoList
             items={doneTasks}
