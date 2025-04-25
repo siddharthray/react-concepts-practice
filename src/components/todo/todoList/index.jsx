@@ -1,12 +1,7 @@
-import TodoItem from "./TodoItem";
+import TodoItem from "../todoItem";
 
 // list all the todo Items
-export default function TodoList({
-  items = [],
-  onDelete,
-  onToggle,
-  onEdit = null,
-}) {
+export default function TodoList({ items, onDelete, onToggle, onEdit = null }) {
   if (items.length === 0) return <p>No tasks yet.</p>;
   return (
     <ul className="todo-list">

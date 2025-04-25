@@ -1,10 +1,14 @@
 import "./App.css";
-import TodoApp from "./TodoApp";
+import NavBar from "./components/Layout/NavBar";
+import TodoApp from "./features/TodoApp";
 
 function App() {
   return (
     <div className="App">
-      <TodoApp />
+      <NavBar />
+      <div className="main-container">
+        <TodoApp />
+      </div>
     </div>
   );
 }
