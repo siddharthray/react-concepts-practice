@@ -1,11 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router";
-import navStyles from "./navbar.module.css";
+import navStyles from "./NavBar.module.css";
 
-export default function NavBar() {
+export default function NavBar({ onMenuClick }) {
   return (
     <nav className={navStyles.navbar}>
-      <div className={navStyles.logo}>Task Tracker</div>
+      <div className={navStyles.navbarStart}>
+        <button className={navStyles.menuButton} onClick={onMenuClick}>
+          <span className={navStyles.hamburger}></span>
+        </button>
+        <div className={navStyles.logo}>Task Tracker</div>
+      </div>
+
       <ul className={navStyles.navbarLink}>
         <li>
           <NavLink

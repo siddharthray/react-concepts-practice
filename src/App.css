@@ -1,12 +1,14 @@
-.App {
+.app {
   display: flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  width: 100%;
+  min-height: 100vh;
 }
 
-.main-container {
+.main-content {
   padding-top: 70px;
-  width: 100%;
+  transition: margin-left 0.2s ease-out;
+}
+
+.main-content.with-sidebar {
+  margin-left: 250px; /* Add this class conditionally when sidebar is open */
 }

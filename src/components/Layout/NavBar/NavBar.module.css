@@ -50,3 +50,45 @@
 ul.navbarLink {
   padding: 0 0.8rem;
 }
+
+.navbarStart {
+  display: flex;
+  align-items: center;
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  position: relative;
+}
+
+.hamburger:before,
+.hamburger:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  left: 0;
+}
+
+.hamburger:before {
+  top: -6px;
+}
+
+.hamburger:after {
+  bottom: -6px;
+}
