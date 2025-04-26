@@ -11,7 +11,7 @@ export default function MainContent({
   return (
     <main
       className={`
-        ${styles.mainContent}
+        ${styles["main-content"]}
         ${styles[`padding-${padding}`]}
         ${fullWidth ? styles.fullWidth : ""}
         ${className}

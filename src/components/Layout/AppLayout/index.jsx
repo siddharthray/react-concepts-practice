@@ -104,12 +104,16 @@ export default function AppLayout({
               onClick={handleToggleSidebar}
               aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
-              {isCollapsed ? "›" : "‹"}
+              {isCollapsed ? (
+                <div className={styles.openedArrow}>›</div>
+              ) : (
+                <div className={styles.closedArrow}>‹</div>
+              )}
             </button>
           </aside>
         )}
 
-        <MainContent>{children}</MainContent>
+        <MainContent className="main-content">{children}</MainContent>
       </div>
 
       {footer && <footer className={styles.footer}>{footer}</footer>}
