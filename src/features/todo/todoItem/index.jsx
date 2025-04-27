@@ -1,9 +1,14 @@
+import { Link, useNavigate } from "react-router";
 import styles from "./TodoItem.module.css";
 
 export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
+  const navigate = useNavigate();
+  const showDetails = () => {
+    // push new URL + pass state
+    navigate(`/task/${item.id}`, { state: { task: item } });
+  };
   return (
     <li className={styles.todoItem}>
-      {/* Row 1: checkbox + text, with actions on the right */}
       <div className={styles.content}>
         <div className={styles.left}>
           <input
@@ -11,7 +16,21 @@ export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
             checked={item.completed}
             onChange={() => onToggle(item.id)}
           />
-          <span className={styles.todoText}>{item.text}</span>
+          <span
+            className={!item.completed ? styles.todoText : ""}
+            onClick={!item.completed ? showDetails : null}
+          >
+            {item.text}
+            <span className={styles.showMore}>Show More</span>
+          </span>
+
+          {/* <Link
+            to={`/task/${item.id}`}
+            state={{ task: item }}
+            className={styles.todoText}
+          >
+            {item.text}
+          </Link> */}
         </div>
         <div className={styles.actions}>
           {!item.completed && onEdit && (

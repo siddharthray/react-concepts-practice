@@ -15,7 +15,7 @@ export default function NavBar({ onMenuClick }) {
       <ul className={navStyles.navbarLink}>
         <li>
           <NavLink
-            to="/home"
+            to="/tasks"
             className={({ isActive }) =>
               isActive ? navStyles.activeLink : navStyles.navbarLink
             }

@@ -4,6 +4,8 @@
   max-width: 1200px;
   margin: 0 auto;
   min-height: 200px;
+  background: #f5f4f2;
+  padding-top: 55px !important;
 }
 
 .fullWidth {

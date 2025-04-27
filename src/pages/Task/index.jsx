@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Task.module.css";
-import TaskList from "../../components/todo/taskList";
-import TodoForm from "../../components/todo/todoForm";
+import TaskList from "../../features/todo/taskList";
+import TodoForm from "../../features/todo/todoForm";
 
 export default function Tasks({
   onAddTask,

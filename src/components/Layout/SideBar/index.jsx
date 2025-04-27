@@ -27,7 +27,7 @@ export default function Sidebar({ onClose }) {
             </li>
             <li>
               <NavLink
-                to="/home"
+                to="/tasks"
                 className={({ isActive }) =>
                   isActive ? styles.activeLink : ""
                 }

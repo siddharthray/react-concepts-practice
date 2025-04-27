@@ -26,15 +26,13 @@ function App() {
   return (
     <div className="app">
       <NavBar onMenuClick={toggleSidebar} />
-      <div className="main-content">
-        <AppLayout
-          sidebar={sidebarOpen ? <Sidebar onClose={closeSidebar} /> : null}
-          sidebarCollapsed={sidebarCollapsed}
-          onToggleSidebar={toggleCollapsed}
-        >
-          <TodoApp />
-        </AppLayout>
-      </div>
+      <AppLayout
+        sidebar={sidebarOpen ? <Sidebar onClose={closeSidebar} /> : null}
+        sidebarCollapsed={sidebarCollapsed}
+        onToggleSidebar={toggleCollapsed}
+      >
+        <TodoApp />
+      </AppLayout>
     </div>
   );
 }

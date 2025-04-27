@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./TextArea.module.css";
 
 export default function TextArea({
@@ -13,6 +13,7 @@ export default function TextArea({
   name,
   id,
   rows = 4,
+  maxRows = 8, // Default max rows
   cols,
   maxLength,
   minLength,
@@ -31,6 +32,39 @@ export default function TextArea({
   ...restProps
 }) {
   const textareaId = id || name;
+  const textareaRef = useRef(null);
+
+  // Auto-resize functionality
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    // Store the current scroll position
+    const scrollTop = textarea.scrollTop;
+
+    // Reset height to get the actual content height
+    textarea.style.height = "auto";
+
+    // Get the scroll height (content height)
+    const scrollHeight = textarea.scrollHeight;
+
+    // Calculate the height based on line height
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight) || 20;
+    const maxHeight = maxRows * lineHeight;
+
+    // Set the new height, capped at maxHeight
+    textarea.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
+
+    // If we capped the height, ensure we have scrolling enabled
+    if (scrollHeight > maxHeight) {
+      textarea.style.overflowY = "auto";
+    } else {
+      textarea.style.overflowY = "hidden";
+    }
+
+    // Restore scroll position
+    textarea.scrollTop = scrollTop;
+  }, [value, maxRows]);
 
   return (
     <div className={`${styles.textareaWrapper} ${wrapperClassName}`}>
@@ -44,6 +78,7 @@ export default function TextArea({
       )}
 
       <textarea
+        ref={textareaRef}
         id={textareaId}
         name={name}
         value={value}
@@ -64,6 +99,7 @@ export default function TextArea({
         className={`${styles.textarea} ${error ? styles.textareaError : ""} ${
           styles[`resize-${resize}`]
         } ${className}`}
+        style={{ minHeight: `${rows * 1.5}em` }} // Set minimum height based on rows
         {...restProps}
       />
 

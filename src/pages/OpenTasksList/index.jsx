@@ -1,6 +1,6 @@
 // pages/OpenTasksPage.tsx
 import React from "react";
-import TodoList from "../../components/todo/todoList";
+import TodoList from "../../features/todo/todoList";
 import openTasksList from "./OpenTasksPage.module.css";
 
 export default function OpenTasksPage({
@@ -12,8 +12,10 @@ export default function OpenTasksPage({
   // const openTasks = tasks.filter((t) => !t?.completed);
 
   return (
-    <div className={`${openTasksList.column} ${openTasksList.openTasks}`}>
-      <h2>Open Tasks</h2>
+    <div
+      className={`${openTasksList.openTasksColumn} ${openTasksList.openTasks}`}
+    >
+      <h2 className={openTasksList.title}>Open Tasks</h2>
       <TodoList
         items={openTasks}
         onDelete={onDelete}

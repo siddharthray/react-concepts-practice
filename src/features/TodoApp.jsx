@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router";
 import Tasks from "../pages/Task";
 import OpenTasksPage from "../pages/OpenTasksList";
 import CompletedTasksPage from "../pages/CompletedTasksList";
+import TaskDetailsPage from "../pages/TaskDetailsPage";
 
 export default function TodoApp() {
   const [tasks, setTasks] = useState(() => {
@@ -51,9 +52,11 @@ export default function TodoApp() {
   }, []);
 
   // Save edited text, then clear edit mode
-  const handleSaveEdit = useCallback((id, newText) => {
+  const handleSaveEdit = useCallback((id, newText, updatedAt) => {
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, text: newText } : t))
+      prev.map((t) =>
+        t.id === id ? { ...t, text: newText, updatedAt: updatedAt } : t
+      )
     );
     setEditingTask(null);
   }, []);
@@ -61,11 +64,10 @@ export default function TodoApp() {
   return (
     <Routes>
       {/* Redirect root → /tasks */}
-      <Route path="/" element={<Navigate to="/home" replace />} />
-
+      <Route path="/" element={<Navigate to="/tasks" replace />} />
       {/* List view */}
       <Route
-        path="home"
+        path="tasks"
         element={
           <Tasks
             onAddTask={handleAddTask}
@@ -78,6 +80,10 @@ export default function TodoApp() {
             onEdit={handleEditStart}
           />
         }
+      />
+      <Route
+        path="/task/:id"
+        element={<TaskDetailsPage allTasks={tasks} onSave={handleSaveEdit} />}
       />
 
       {/* Detail view with nested edit form */}
