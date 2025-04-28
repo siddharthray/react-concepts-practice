@@ -8,6 +8,7 @@ export default function OpenTasksPage({
   onDelete,
   onToggle,
   onEdit,
+  title,
 }) {
   // const openTasks = tasks.filter((t) => !t?.completed);
 
@@ -15,7 +16,7 @@ export default function OpenTasksPage({
     <div
       className={`${openTasksList.openTasksColumn} ${openTasksList.openTasks}`}
     >
-      <h2 className={openTasksList.title}>Open Tasks</h2>
+      <h2 className={openTasksList.title}>{title}</h2>
       <TodoList
         items={openTasks}
         onDelete={onDelete}

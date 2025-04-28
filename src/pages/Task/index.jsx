@@ -12,15 +12,15 @@ export default function Tasks({
   onDelete,
   onToggle,
   onEdit,
+  title,
+  description,
 }) {
   return (
     <div className={styles.container}>
       {/* Row 1: title + description */}
       <div className={styles.title}>
-        <h1>Task Tracker</h1>
-        <p>
-          Keep track of your tasks: add new ones, mark them done, or reopen.
-        </p>
+        <h1>{title}</h1>
+        <p>{description}</p>
       </div>
 
       {/* Row 2: form */}

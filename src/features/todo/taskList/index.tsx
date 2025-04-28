@@ -26,6 +26,7 @@ export default function TaskList({
         onDelete={onDelete}
         onToggle={onToggle}
         onEdit={onEdit}
+        title={"Open Tasks"}
       />
 
       {/* Completed Tasks */}
@@ -33,6 +34,7 @@ export default function TaskList({
         doneTasks={doneTasks}
         onDelete={onDelete}
         onToggle={onToggle}
+        title={"Completed Tasks"}
       />
     </div>
   );

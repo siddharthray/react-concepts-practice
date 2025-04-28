@@ -78,6 +78,8 @@ export default function TodoApp() {
             onDelete={handleDelete}
             onToggle={handleToggle}
             onEdit={handleEditStart}
+            title="Task Tracker"
+            description="Keep track of your tasks: add new ones, mark them done, or reopen."
           />
         }
       />
