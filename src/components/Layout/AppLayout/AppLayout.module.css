@@ -211,7 +211,7 @@
 }
 
 .sidebarCollapsed .sidebarToggle {
-  left: 47px;
+  left: 42px;
 }
 
 .sidebarToggle {
@@ -238,6 +238,7 @@
 .closedArrow {
   font-size: 2rem;
   font-weight: 600;
+  background: black;
 }
 
 /* .mainContent {
