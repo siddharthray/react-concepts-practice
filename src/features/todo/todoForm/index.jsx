@@ -27,15 +27,7 @@ export default function TodoForm({
     if (editingTask && onSaveEdit) {
       onSaveEdit(editingTask.id, text);
     } else {
-      const newTask = {
-        id: Date.now(),
-        text,
-        completed: false,
-        createdAt: new Date().toISOString(),
-        completedAt: null,
-        reopenedAt: null,
-      };
-      onAddTask(newTask);
+      onAddTask(text);
     }
 
     // Reset form & exit edit mode

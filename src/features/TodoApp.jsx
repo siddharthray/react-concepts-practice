@@ -4,12 +4,15 @@ import Tasks from "../pages/Task";
 import OpenTasksPage from "../pages/OpenTasksList";
 import CompletedTasksPage from "../pages/CompletedTasksList";
 import TaskDetailsPage from "../pages/TaskDetailsPage";
+import {
+  fetchTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../services/taskService";
 
 export default function TodoApp() {
-  const [tasks, setTasks] = useState(() => {
-    const stored = localStorage.getItem("tasks");
-    return stored ? JSON.parse(stored) : [];
-  });
+  const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
 
   const openTasks = tasks ? tasks.filter((t) => !t?.completed) : [];
@@ -17,34 +20,61 @@ export default function TodoApp() {
 
   // Persist on every change
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    (async () => {
+      try {
+        const response = await fetchTasks();
+        setTasks(response);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    })();
+  }, []);
 
   // Add new
-  const handleAddTask = useCallback((newTask) => {
-    setTasks((prev) => [...prev, newTask]);
+  const handleAddTask = useCallback(async (newTask) => {
+    try {
+      const created = await createTask(newTask);
+      setTasks((prev) => [...prev, created]);
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   }, []);
 
   // Delete
-  const handleDelete = useCallback((id) => {
-    setTasks((prev) => prev.filter((t) => t.id !== id));
+  const handleDelete = useCallback(async (id) => {
+    try {
+      await deleteTask(id);
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   }, []);
 
   // Toggle complete ↔ reopen (with timestamps)
-  const handleToggle = useCallback((id) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === id
-          ? {
-              ...t,
-              completed: !t.completed,
-              completedAt: !t.completed ? new Date().toISOString() : null,
-              reopenedAt: t.completed ? new Date().toISOString() : null,
-            }
-          : t
-      )
-    );
-  }, []);
+  const handleToggle = useCallback(
+    async (id) => {
+      const task = tasks.find((t) => t.id === id);
+      if (!task) return;
+
+      const now = new Date().toISOString();
+      const isReopening = task.completed;
+
+      const updates = {
+        completed: !task.completed,
+        ...(isReopening ? { reopenedAt: now } : {}),
+      };
+
+      try {
+        const updatedTask = await updateTask(id, updates);
+
+        setTasks((prev) => prev.map((t) => (t.id === id ? updatedTask : t)));
+      } catch (err) {
+        console.error("Toggle failed:", err);
+        alert("Could not toggle task status");
+      }
+    },
+    [tasks]
+  );
 
   // Start editing: load the task into the form
   const handleEditStart = useCallback((task) => {
@@ -52,13 +82,24 @@ export default function TodoApp() {
   }, []);
 
   // Save edited text, then clear edit mode
-  const handleSaveEdit = useCallback((id, newText, updatedAt) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === id ? { ...t, text: newText, updatedAt: updatedAt } : t
-      )
-    );
-    setEditingTask(null);
+  // const handleSaveEdit = useCallback((id, newText, updatedAt) => {
+  //   setTasks((prev) =>
+  //     prev.map((t) =>
+  //       t.id === id ? { ...t, text: newText, updatedAt: updatedAt } : t
+  //     )
+  //   );
+  //   setEditingTask(null);
+  // }, []);
+
+  const handleSaveEdit = useCallback(async (id, newText) => {
+    try {
+      // only send the text; server sets updatedAt
+      const updated = await updateTask(id, { text: newText });
+      setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
+      setEditing(null);
+    } catch (err) {
+      console.error("Edit failed:", err);
+    }
   }, []);
 
   return (

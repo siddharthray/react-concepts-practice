@@ -27,14 +27,14 @@ export default function TaskDetails({ task, onChange, onSave, children }) {
           <div className={styles.timeStamp}>
             <p>
               <strong>Created At:</strong>{" "}
-              {task.createdAt
-                ? new Date(task.createdAt).toLocaleString()
+              {task.created_at
+                ? new Date(task.created_at).toLocaleString()
                 : "No Timestamp"}
             </p>
             <p>
               <strong>Updated At:</strong>{" "}
-              {task.updatedAt
-                ? new Date(task.updatedAt).toLocaleString()
+              {task.updated_at
+                ? new Date(task.updated_at).toLocaleString()
                 : "No Timestamp"}
             </p>
           </div>

@@ -55,7 +55,7 @@ export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
         <div className={styles.timestamp}>
           <span className={styles.timestampLabel}>Created:</span>
           <span className={styles.timestampValue}>
-            {new Date(item.createdAt).toLocaleString()}
+            {new Date(item.created_at).toLocaleString()}
           </span>
         </div>
 
@@ -63,16 +63,16 @@ export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
           <div className={styles.timestamp}>
             <span className={styles.timestampLabel}>Completed:</span>
             <span className={styles.timestampValue}>
-              {new Date(item.completedAt).toLocaleString()}
+              {new Date(item.completed_at).toLocaleString()}
             </span>
           </div>
         )}
 
-        {!item.completed && item.reopenedAt && (
+        {!item.completed && item.reopened_at && (
           <div className={styles.timestamp}>
             <span className={styles.timestampLabel}>Reopened:</span>
             <span className={styles.timestampValue}>
-              {new Date(item.reopenedAt).toLocaleString()}
+              {new Date(item.reopened_at).toLocaleString()}
             </span>
           </div>
         )}

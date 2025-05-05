@@ -6,8 +6,8 @@ import OpenTasksPage from "../../../pages/OpenTasksList";
 type Task = {
   id: string | null;
   text: string;
-  createdAt: Date | null;
-  reopenedAt: Date | null;
+  created_at: Date | null;
+  reopened_at: Date | null;
   completed: boolean;
 };
 

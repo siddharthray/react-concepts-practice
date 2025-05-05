@@ -29,11 +29,5 @@ export default [
         { allowConstantExport: true },
       ],
     },
-    modules: {
-      node: {
-        ...node,
-        "process.env": true,
-      },
-    },
   },
 ];
