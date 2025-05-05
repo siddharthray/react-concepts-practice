@@ -81,22 +81,15 @@ export default function TodoApp() {
     setEditingTask(task);
   }, []);
 
-  // Save edited text, then clear edit mode
-  // const handleSaveEdit = useCallback((id, newText, updatedAt) => {
-  //   setTasks((prev) =>
-  //     prev.map((t) =>
-  //       t.id === id ? { ...t, text: newText, updatedAt: updatedAt } : t
-  //     )
-  //   );
-  //   setEditingTask(null);
-  // }, []);
-
   const handleSaveEdit = useCallback(async (id, newText) => {
     try {
       // only send the text; server sets updatedAt
-      const updated = await updateTask(id, { text: newText });
+      const updated = await updateTask(id, {
+        text: newText,
+        description_changed: true,
+      });
       setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
-      setEditing(null);
+      setEditingTask(null);
     } catch (err) {
       console.error("Edit failed:", err);
     }

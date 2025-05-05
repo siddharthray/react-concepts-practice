@@ -68,11 +68,20 @@ export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
           </div>
         )}
 
-        {!item.completed && item.reopened_at && (
+        {item.reopened_at && (
           <div className={styles.timestamp}>
             <span className={styles.timestampLabel}>Reopened:</span>
             <span className={styles.timestampValue}>
               {new Date(item.reopened_at).toLocaleString()}
+            </span>
+          </div>
+        )}
+
+        {item.updated_at && (
+          <div className={styles.timestamp}>
+            <span className={styles.timestampLabel}>Updated:</span>
+            <span className={styles.timestampValue}>
+              {new Date(item.updated_at).toLocaleString()}
             </span>
           </div>
         )}
