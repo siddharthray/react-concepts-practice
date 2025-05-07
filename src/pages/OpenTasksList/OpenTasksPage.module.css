@@ -18,4 +18,5 @@
   flex: 1;
   overflow-y: auto;
   max-height: 55vh;
+  margin-top: 20px;
 }

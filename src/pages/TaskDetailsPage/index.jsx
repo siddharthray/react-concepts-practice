@@ -41,7 +41,7 @@ export default function TaskDetailsPage({ allTasks, onSave }) {
   const handleSave = (updatedTask) => {
     // save the updated task to your store or API
     console.log("Saving task:", updatedTask);
-    onSave(updatedTask.id, updatedTask.text, updatedTask.updatedAt);
+    onSave(updatedTask.id, updatedTask.text);
     navigate(-1);
   };
 

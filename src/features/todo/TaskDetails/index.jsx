@@ -29,13 +29,13 @@ export default function TaskDetails({ task, onChange, onSave, children }) {
               <strong>Created At:</strong>{" "}
               {task.created_at
                 ? new Date(task.created_at).toLocaleString()
-                : "No Timestamp"}
+                : "NA"}
             </p>
             <p>
               <strong>Updated At:</strong>{" "}
               {task.updated_at
                 ? new Date(task.updated_at).toLocaleString()
-                : "No Timestamp"}
+                : "NA"}
             </p>
           </div>
         </div>
