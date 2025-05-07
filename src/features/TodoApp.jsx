@@ -56,12 +56,8 @@ export default function TodoApp() {
       const task = tasks.find((t) => t.id === id);
       if (!task) return;
 
-      const now = new Date().toISOString();
-      const isReopening = task.completed;
-
       const updates = {
         completed: !task.completed,
-        ...(isReopening ? { reopenedAt: now } : {}),
       };
 
       try {
@@ -86,7 +82,6 @@ export default function TodoApp() {
       // only send the text; server sets updatedAt
       const updated = await updateTask(id, {
         text: newText,
-        description_changed: true,
       });
       setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
       setEditingTask(null);
