@@ -57,7 +57,7 @@ export default function TaskDetails({ task, onChange, onSave, children }) {
         <button
           type="submit"
           className={`${!isEditing ? styles.disabled : styles.saveBtn}`}
-          onClick={() => onSave(task)}
+          onClick={onSave}
           disabled={!isEditing}
         >
           Save Task

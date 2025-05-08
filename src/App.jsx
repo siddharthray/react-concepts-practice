@@ -1,9 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import AppLayout from "./components/Layout/AppLayout";
 import NavBar from "./components/Layout/NavBar";
 import Sidebar from "./components/Layout/SideBar";
-import TodoApp from "./features/TodoApp";
+import Home from "./pages/Home";
+import { Routes, Route, Navigate } from "react-router";
+import TaskDetailsPage from "./pages/TaskDetailsPage";
+import OpenTasksPage from "./pages/OpenTasksList";
+import CompletedTasksPage from "./pages/CompletedTasksList";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -22,7 +26,6 @@ function App() {
   const toggleCollapsed = () => {
     setSidebarCollapsed((prev) => !prev);
   };
-
   return (
     <div className="app">
       <NavBar onMenuClick={toggleSidebar} />
@@ -31,7 +34,15 @@ function App() {
         sidebarCollapsed={sidebarCollapsed}
         onToggleSidebar={toggleCollapsed}
       >
-        <TodoApp />
+        <Routes>
+          {/* Redirect root → /tasks */}
+          <Route path="/" element={<Navigate to="/tasks" replace />} />
+          <Route path="tasks" element={<Home />} />
+          <Route path="/task/:id" element={<TaskDetailsPage />} />
+          <Route path="/openTasks" element={<OpenTasksPage />} />
+          <Route path="/completedTasks" element={<CompletedTasksPage />} />
+          <Route path="*" element={<h2>404: Not Found</h2>} />
+        </Routes>
       </AppLayout>
     </div>
   );

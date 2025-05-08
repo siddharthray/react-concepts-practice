@@ -12,6 +12,10 @@ export function fetchTasks() {
   return api.get("/tasks").then((res) => res.data);
 }
 
+export function fetchTaskById(id) {
+  return api.get(`/tasks/${id}`).then((res) => res.data);
+}
+
 // Create a new task (POST /tasks)
 export function createTask(text) {
   return api.post("/tasks", { text }).then((res) => res.data);
