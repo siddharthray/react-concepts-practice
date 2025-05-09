@@ -5,7 +5,7 @@ export default function TodoItem({ item, onDelete, onToggle, onEdit }) {
   const navigate = useNavigate();
   const showDetails = () => {
     // push new URL + pass state
-    navigate(`/task/${item.id}`, { state: { task: item } });
+    navigate(`/tasks/${item.id}`, { state: { task: item } });
   };
   return (
     <li className={styles.todoItem}>

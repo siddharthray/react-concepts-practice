@@ -4,7 +4,7 @@ import AppLayout from "./components/Layout/AppLayout";
 import NavBar from "./components/Layout/NavBar";
 import Sidebar from "./components/Layout/SideBar";
 import Home from "./pages/Home";
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate, Outlet } from "react-router";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
 import OpenTasksPage from "./pages/OpenTasksList";
 import CompletedTasksPage from "./pages/CompletedTasksList";
@@ -37,10 +37,13 @@ function App() {
         <Routes>
           {/* Redirect root → /tasks */}
           <Route path="/" element={<Navigate to="/tasks" replace />} />
-          <Route path="tasks" element={<Home />} />
-          <Route path="/task/:id" element={<TaskDetailsPage />} />
-          <Route path="/openTasks" element={<OpenTasksPage />} />
-          <Route path="/completedTasks" element={<CompletedTasksPage />} />
+
+          <Route path="tasks/*" element={<Outlet />}>
+            <Route index element={<Home />} />
+            <Route path="openTasks" element={<OpenTasksPage />} />
+            <Route path="completedTasks" element={<CompletedTasksPage />} />
+            <Route path=":id" element={<TaskDetailsPage />} />
+          </Route>
           <Route path="*" element={<h2>404: Not Found</h2>} />
         </Routes>
       </AppLayout>

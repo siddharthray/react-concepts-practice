@@ -25,7 +25,7 @@ export default function NavBar({ onMenuClick }) {
         </li>
         <li>
           <NavLink
-            to="/openTasks"
+            to="/tasks/openTasks"
             className={({ isActive }) =>
               isActive ? navStyles.activeLink : navStyles.navbarLink
             }
@@ -35,7 +35,7 @@ export default function NavBar({ onMenuClick }) {
         </li>
         <li>
           <NavLink
-            to="/completedTasks"
+            to="/tasks/completedTasks"
             className={({ isActive }) =>
               isActive ? navStyles.activeLink : navStyles.navbarLink
             }

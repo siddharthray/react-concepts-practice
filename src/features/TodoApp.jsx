@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Navigate, Route, Routes } from "react-router";
 import Tasks from "../pages/Task";
-import OpenTasksPage from "../pages/OpenTasksList";
-import CompletedTasksPage from "../pages/CompletedTasksList";
-import TaskDetailsPage from "../pages/TaskDetailsPage";
+
 import {
   fetchTasks,
   createTask,
@@ -11,6 +8,7 @@ import {
   deleteTask,
 } from "../services/taskService";
 import { useSaveEdit } from "../hooks/useSaveEdit";
+import { useLocation } from "react-router";
 
 export default function TodoApp() {
   const [tasks, setTasks] = useState([]);
@@ -94,29 +92,6 @@ export default function TodoApp() {
         title="Task Tracker"
         description="Keep track of your tasks: add new ones, mark them done, or reopen."
       />
-      {/* <Routes>
-        <Route
-          path="/openTasks"
-          element={
-            <OpenTasksPage
-              openTasks={openTasks}
-              onDelete={handleDelete}
-              onToggle={handleToggle}
-              onEdit={handleEditStart}
-            />
-          }
-        />
-        <Route
-          path="/completedTasks"
-          element={
-            <CompletedTasksPage
-              doneTasks={doneTasks}
-              onDelete={handleDelete}
-              onToggle={handleToggle}
-            />
-          }
-        />
-      </Routes> */}
     </>
   );
 }

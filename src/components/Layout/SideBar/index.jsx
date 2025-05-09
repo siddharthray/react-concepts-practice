@@ -5,12 +5,6 @@ import styles from "./Sidebar.module.css";
 export default function Sidebar({ onClose }) {
   return (
     <div className={styles.sidebarInner}>
-      {/* <div className={styles.sidebarHeader}>
-        <button className={styles.closeButton} onClick={onClose} type="button">
-          &times;
-        </button>
-      </div> */}
-
       <div className={styles.sidebarContent}>
         <nav>
           <ul className={styles.sidebarNav}>
@@ -28,6 +22,7 @@ export default function Sidebar({ onClose }) {
             <li>
               <NavLink
                 to="/tasks"
+                end
                 className={({ isActive }) =>
                   isActive ? styles.activeLink : ""
                 }
@@ -38,7 +33,7 @@ export default function Sidebar({ onClose }) {
             </li>
             <li>
               <NavLink
-                to="/openTasks"
+                to="/tasks/openTasks"
                 className={({ isActive }) =>
                   isActive ? styles.activeLink : ""
                 }
@@ -49,7 +44,7 @@ export default function Sidebar({ onClose }) {
             </li>
             <li>
               <NavLink
-                to="/completedTasks"
+                to="/tasks/completedTasks"
                 className={({ isActive }) =>
                   isActive ? styles.activeLink : ""
                 }
