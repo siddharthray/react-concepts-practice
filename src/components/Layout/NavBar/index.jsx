@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router";
 import navStyles from "./NavBar.module.css";
 
@@ -16,6 +15,7 @@ export default function NavBar({ onMenuClick }) {
         <li>
           <NavLink
             to="/tasks"
+            end
             className={({ isActive }) =>
               isActive ? navStyles.activeLink : navStyles.navbarLink
             }
