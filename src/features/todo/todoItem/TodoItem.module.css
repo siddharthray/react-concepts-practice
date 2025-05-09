@@ -10,6 +10,7 @@
   border-radius: 8px;
   margin-bottom: 4px;
   max-height: 6rem;
+  overflow: auto;
 }
 
 /* First row: content (checkbox/text + actions) */
